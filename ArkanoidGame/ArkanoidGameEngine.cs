@@ -9,16 +9,31 @@ namespace ArkanoidGame
 {
     public class ArkanoidGameEngine : GameEngine
     {
-        
+
         public ArkanoidGameEngine(ConsoleGraphics graphics)
         : base(graphics)
         {
             AddObject(new Board(graphics, "sprites.png"));
             AddObject(new Ball(graphics, "sprites.png", this));
-            for (int i = 0; i < 30; i++)
+            AddObject(new Scors(graphics, "sprites.png"));
+            for (int i = 0; i < 1; i++)
             {
-                AddObject(new Blocks( 20 + i*35, 50, graphics, "sprites.png"));
+                AddObject(new Blocks(170 + i * 45, 100, graphics, "sprites.png"));
+                //AddObject(new Blocks(170 + i * 45, 150, graphics, "sprites.png"));
+                //AddObject(new Blocks(170 + i * 45, 200, graphics, "sprites.png"));
             }
+        }
+
+        public bool isAnyBlockOnBord()
+        {
+            foreach (var obj in objects)
+            {
+                if (obj is Blocks)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public List<CGameObject> GetCollisions(CGameObject Obj)
@@ -39,6 +54,5 @@ namespace ArkanoidGame
         {
             delObjects.Add(Obj);
         }
-
     }
 }

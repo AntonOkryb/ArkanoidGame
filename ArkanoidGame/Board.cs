@@ -13,7 +13,7 @@ namespace ArkanoidGame
         public Board(ConsoleGraphics graphics, string img) : base(graphics, img)
         {
             x = 600;
-            y = 770;
+            y = 745;
             h = 25;
             w = 116;
         }
@@ -25,15 +25,17 @@ namespace ArkanoidGame
 
         public override void Update(GameEngine engine)
         {
-            int W = graphics.ClientWidth;
-            int H = graphics.ClientHeight;
-            
-            if (x < W-125)
-                if (Input.IsKeyDown(Keys.RIGHT)) x += 25;
+            if (!Ball.GetIsGameOver())
+            {
+                int W = graphics.ClientWidth;
+                int H = graphics.ClientHeight;
 
-            if (x > 0)
-                if (Input.IsKeyDown(Keys.LEFT)) x -= 25;
-            
+                if (x < W - 125)
+                    if (Input.IsKeyDown(Keys.RIGHT)) x += 25;
+
+                if (x > 0)
+                    if (Input.IsKeyDown(Keys.LEFT)) x -= 25;
+            }
         }
     }
 }

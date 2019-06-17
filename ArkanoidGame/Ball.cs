@@ -10,27 +10,49 @@ namespace ArkanoidGame
     class Ball : CGameObject
     {
         static Random rnd = new Random();
-        //private ArkanoidGameEngine gameEngine { get; }
        
         private int Vx;
         private int Vy;
         bool isBallStandingOnBoard;
+        private static bool  isGameOver;
+        bool noBlocks;
 
         public Ball(ConsoleGraphics graphics, string img, ArkanoidGameEngine gameEngine) : base(graphics, img)
         {
             isBallStandingOnBoard = true;
+            isGameOver = false;
+            noBlocks = false;
             x = 649;
-            y = 755;
+            y = 730;
             h = 16;
             w = 16;
-            Vx = rnd.Next(-10,10);
-            Vy = -10;
+            Vx = rnd.Next(-14,14);
+            Vy = -14;
             this.gameEngine = gameEngine;
+        }
+
+        public static bool GetIsGameOver()
+        {
+            return isGameOver;
         }
 
         public override void Render(ConsoleGraphics graphics)
         {
-            graphics.DrawImagePart(image, 160, 200, h, w, x, y);
+            if (!isGameOver)
+            {
+                graphics.DrawImagePart(image, 160, 200, h, w, x, y);
+            }
+            if (isGameOver)
+            {
+                if (noBlocks)
+                {
+                    graphics.DrawString("W I N", "Arial", 0xFF000080, 600, 400, 30);
+                }
+                else
+                {
+                    graphics.DrawString("G A M E  O V E R", "Arial", 0xFF000080, 500, 400, 30);
+                }
+            }
         }
 
         public override void Update(GameEngine engine)
@@ -68,11 +90,21 @@ namespace ArkanoidGame
                     {
                         Vy = -Vy;
                         gameEngine.removeGameObj(gO);
+                        Scors.AddScors(10);
+                        noBlocks = gameEngine.isAnyBlockOnBord();
+                        if (noBlocks)
+                        {
+                            isGameOver = true;
+                        }
                     }
+                }
+                if (y > graphics.ClientHeight)
+                {
+                    Scors.ScorsReset();
+                    isGameOver = true;
                 }
             }
         }
-            
     }
 }
 
