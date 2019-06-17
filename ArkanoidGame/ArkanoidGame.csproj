@@ -48,8 +48,11 @@
   <ItemGroup>
     <Compile Include="ArkanoidGameEngine.cs" />
     <Compile Include="Ball.cs" />
+    <Compile Include="Blocks.cs" />
     <Compile Include="Board.cs" />
     <Compile Include="CGameObject.cs" />
+    <Compile Include="CPoint.cs" />
+    <Compile Include="CRect.cs" />
     <Compile Include="GameEngine.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Program.cs" />

@@ -14,23 +14,26 @@ namespace ArkanoidGame
         {
             x = 600;
             y = 770;
+            h = 25;
+            w = 116;
         }
 
         public override void Render(ConsoleGraphics graphics)
         {
-            graphics.DrawImagePart(image, 0, 240, 116, 25, x, y);
+            graphics.DrawImagePart(image, 0, 240, w, h, x, y);
         }
 
         public override void Update(GameEngine engine)
         {
-            if (x < w-125)
+            int W = graphics.ClientWidth;
+            int H = graphics.ClientHeight;
+            
+            if (x < W-125)
                 if (Input.IsKeyDown(Keys.RIGHT)) x += 25;
 
             if (x > 0)
                 if (Input.IsKeyDown(Keys.LEFT)) x -= 25;
             
         }
-
-
     }
 }
