@@ -16,11 +16,11 @@ namespace ArkanoidGame
             AddObject(new Board(graphics, "sprites.png"));
             AddObject(new Ball(graphics, "sprites.png", this));
             AddObject(new Scors(graphics, "sprites.png"));
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 25; i++)
             {
                 AddObject(new Blocks(170 + i * 45, 100, graphics, "sprites.png"));
-                //AddObject(new Blocks(170 + i * 45, 150, graphics, "sprites.png"));
-                //AddObject(new Blocks(170 + i * 45, 200, graphics, "sprites.png"));
+                AddObject(new Blocks(170 + i * 45, 150, graphics, "sprites.png"));
+                AddObject(new Blocks(170 + i * 45, 200, graphics, "sprites.png"));
             }
         }
 

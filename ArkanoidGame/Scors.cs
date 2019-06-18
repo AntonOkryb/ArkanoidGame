@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,29 +11,50 @@ namespace ArkanoidGame
     class Scors : CGameObject
     {
         private static  int currentScors;
-        private int bestScors;
+        private static int bestScors;
+        static bool  isBestScorsChenged; 
         public Scors(ConsoleGraphics graphics, string img) : base(graphics, img)
         {
             currentScors = 0;
-            bestScors = 0;
+            isBestScorsChenged = false;
+            FileInfo scors = new FileInfo("scors.txt");
+            if (scors.Exists)
+            {
+                using (StreamReader sr = new StreamReader("scors.txt"))
+                {
+                    bestScors = int.Parse(sr.ReadToEnd());
+                }
+            }
+            else
+            {
+                bestScors = 0;
+                scors.CreateText();
+            }
         }
 
-       public void putBestScors()
+        public void PutBestScors()
         {
             if (currentScors > bestScors)
             {
                 bestScors = currentScors;
+                isBestScorsChenged = true;
+            }
+        }
+
+        public static void WriteInFileBestScors()
+        {
+            if (isBestScorsChenged)
+            {
+                using (StreamWriter sw = new StreamWriter("scors.txt", false, System.Text.Encoding.Default))
+                {
+                    sw.Write(bestScors);
+                }
             }
         }
 
         public static void AddScors(int n)
         {
             currentScors+=n;
-        }
-
-        public static void ScorsReset()
-        {
-            currentScors=0;
         }
 
         public override void Render(ConsoleGraphics graphics)
@@ -42,7 +64,11 @@ namespace ArkanoidGame
         }
         public override void Update(GameEngine engine)
         {
-            putBestScors();
+            PutBestScors();
+            if (Ball.GetIsGameOver())
+            {
+                WriteInFileBestScors();
+            }
         }
     }
 }

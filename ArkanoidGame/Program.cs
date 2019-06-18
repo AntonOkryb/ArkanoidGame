@@ -11,6 +11,10 @@ namespace ArkanoidGame
     {
         static void Main(string[] args)
         {
+            Run();
+        }
+        public static void Run()
+        {
             Console.WindowWidth = 150;
             Console.WindowHeight = 40;
             Console.SetBufferSize(Console.WindowWidth, Console.WindowHeight);
