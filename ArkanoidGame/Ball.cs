@@ -26,7 +26,7 @@ namespace ArkanoidGame
             y = 730;
             h = 16;
             w = 16;
-            Vx = rnd.Next(-14,14);
+            Vx = rnd.Next(-14,-14);
             Vy = -14;
             this.gameEngine = gameEngine;
         }
@@ -42,7 +42,7 @@ namespace ArkanoidGame
             {
                 graphics.DrawImagePart(image, 160, 200, h, w, x, y);
             }
-            if (isGameOver)
+            else
             {
                 if (noBlocks)
                 {
@@ -52,7 +52,7 @@ namespace ArkanoidGame
                 {
                     graphics.DrawString("G A M E  O V E R", "Arial", 0xFF000080, 500, 400, 30);
                 }
-                Program.Run();
+                //Program.Run();
             }
         }
 
@@ -92,7 +92,7 @@ namespace ArkanoidGame
                         Vy = -Vy;
                         gameEngine.removeGameObj(gO);
                         Scors.AddScors(10);
-                        noBlocks = (!gameEngine.isAnyBlockOnBord());
+                        noBlocks = gameEngine.isAnyBlockOnBord();
                         if (noBlocks)
                         {
                             isGameOver = true;
