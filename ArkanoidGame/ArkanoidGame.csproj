@@ -54,6 +54,7 @@
     <Compile Include="CPoint.cs" />
     <Compile Include="CRect.cs" />
     <Compile Include="GameEngine.cs" />
+    <Compile Include="GameMenu.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

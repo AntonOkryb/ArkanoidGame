@@ -16,26 +16,17 @@ namespace ArkanoidGame
             AddObject(new Board(graphics, "sprites.png"));
             AddObject(new Ball(graphics, "sprites.png", this));
             AddObject(new Scors(graphics, "sprites.png"));
-            for (int i = 0; i < 1; i++)
+            AddObject(new GameMenu(graphics, "sprites.png"));
+            for (int i = 0; i < 22; i++)
             {
-                AddObject(new Blocks(170 + i * 45, 100, graphics, "sprites.png"));
-                //AddObject(new Blocks(170 + i * 45, 150, graphics, "sprites.png"));
-                //AddObject(new Blocks(170 + i * 45, 200, graphics, "sprites.png"));
+                AddObject(new Blocks(335 + i * 32, 100, graphics, "sprites.png"));
+                AddObject(new Blocks(90 + i * 55, 150, graphics, "sprites.png"));
+                AddObject(new Blocks(190 + i * 45, 250, graphics, "sprites.png"));
+                AddObject(new Blocks(335 + i * 32, 290, graphics, "sprites.png"));
+
             }
         }
-
-        public bool isAnyBlockOnBord()
-        {
-            foreach (var obj in objects)
-            {
-                if (obj is Blocks)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
+        
         public List<CGameObject> GetCollisions(CGameObject Obj)
         {
             List<CGameObject> cGameObjects = new List<CGameObject>();

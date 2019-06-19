@@ -15,6 +15,7 @@ namespace ArkanoidGame
         private int Vy;
         bool isBallStandingOnBoard;
         private static bool  isGameOver;
+        int BallCrushedBlocksCnt;
         bool noBlocks;
 
         public Ball(ConsoleGraphics graphics, string img, ArkanoidGameEngine gameEngine) : base(graphics, img)
@@ -26,9 +27,10 @@ namespace ArkanoidGame
             y = 730;
             h = 16;
             w = 16;
-            Vx = rnd.Next(-14,-14);
+            Vx = rnd.Next(-14,14);
             Vy = -14;
             this.gameEngine = gameEngine;
+            BallCrushedBlocksCnt = 0;
         }
 
         public static bool GetIsGameOver()
@@ -52,7 +54,6 @@ namespace ArkanoidGame
                 {
                     graphics.DrawString("G A M E  O V E R", "Arial", 0xFF000080, 500, 400, 30);
                 }
-                //Program.Run();
             }
         }
 
@@ -80,6 +81,7 @@ namespace ArkanoidGame
                 y += Vy;
                 if (x <= 0 || x >= W-5 ) Vx = -Vx;
                 if (y <= 0 ) Vy = -Vy;
+                bool ballHasChangeDirection = true;
                 List<CGameObject> gameObjects = gameEngine.GetCollisions(this);
                 foreach (var gO in gameObjects)
                 {
@@ -89,13 +91,18 @@ namespace ArkanoidGame
                     }
                     if (gO is Blocks)
                     {
-                        Vy = -Vy;
+                        BallCrushedBlocksCnt++;
+                        if (ballHasChangeDirection)
+                        {
+                            Vy = -Vy;
+                        }
+                        ballHasChangeDirection = false;
                         gameEngine.removeGameObj(gO);
                         Scors.AddScors(10);
-                        noBlocks = gameEngine.isAnyBlockOnBord();
-                        if (noBlocks)
+                        if (BallCrushedBlocksCnt == 88)
                         {
                             isGameOver = true;
+                            noBlocks = true;
                         }
                     }
                 }

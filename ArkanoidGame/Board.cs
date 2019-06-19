@@ -20,7 +20,10 @@ namespace ArkanoidGame
 
         public override void Render(ConsoleGraphics graphics)
         {
-            graphics.DrawImagePart(image, 0, 240, w, h, x, y);
+            if (!Ball.GetIsGameOver())
+            {
+                graphics.DrawImagePart(image, 0, 240, w, h, x, y);
+            }
         }
 
         public override void Update(GameEngine engine)

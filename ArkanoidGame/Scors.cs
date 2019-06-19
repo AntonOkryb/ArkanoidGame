@@ -10,9 +10,9 @@ namespace ArkanoidGame
 {
     class Scors : CGameObject
     {
-        private static  int currentScors;
+        private static int currentScors;
         private static int bestScors;
-        static bool  isBestScorsChenged; 
+        static bool isBestScorsChenged;
         public Scors(ConsoleGraphics graphics, string img) : base(graphics, img)
         {
             currentScors = 0;
@@ -34,10 +34,13 @@ namespace ArkanoidGame
 
         public void PutBestScors()
         {
-            if (currentScors > bestScors)
+            if (!Ball.GetIsGameOver())
             {
-                bestScors = currentScors;
-                isBestScorsChenged = true;
+                if (currentScors > bestScors)
+                {
+                    bestScors = currentScors;
+                    isBestScorsChenged = true;
+                }
             }
         }
 
@@ -52,15 +55,28 @@ namespace ArkanoidGame
             }
         }
 
+        public static void WriteInFileBestScors(int scors)
+        {
+            using (StreamWriter sw = new StreamWriter("scors.txt", false, System.Text.Encoding.Default))
+            {
+                sw.Write(scors);
+            }
+        }
+
+        public static void SetBestScors(int scors)
+        {
+            bestScors = scors;
+        }
+
         public static void AddScors(int n)
         {
-            currentScors+=n;
+            currentScors += n;
         }
 
         public override void Render(ConsoleGraphics graphics)
         {
-            graphics.DrawString($"SCORS = {currentScors}", "Arial", 0xFF000080, 30, graphics.ClientHeight-25, 16);
-            graphics.DrawString($"BEST SCORS = {bestScors}", "Arial", 0xFF000080, graphics.ClientWidth - 220, graphics.ClientHeight-25, 16);
+            graphics.DrawString($"SCORS = {currentScors}", "Arial", 0xFF000080, 30, graphics.ClientHeight - 25, 16);
+            graphics.DrawString($"BEST SCORS = {bestScors}", "Arial", 0xFF000080, graphics.ClientWidth - 220, graphics.ClientHeight - 25, 16);
         }
         public override void Update(GameEngine engine)
         {

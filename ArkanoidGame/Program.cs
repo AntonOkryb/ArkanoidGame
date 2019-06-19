@@ -21,9 +21,7 @@ namespace ArkanoidGame
             Console.BackgroundColor = ConsoleColor.White;
             Console.CursorVisible = false;
             Console.Clear();
-
             ConsoleGraphics graphics = new ConsoleGraphics();
-
             GameEngine engine = new ArkanoidGameEngine(graphics);
             engine.Start();
         }
