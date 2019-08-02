@@ -8,12 +8,12 @@ namespace ArkanoidGame
 {
     public class CPoint
     {
-        public int x { set; get; }
-        public int y { set; get; }
+        public int X { set; get; }
+        public int Y { set; get; }
         public CPoint(int _x, int _y)
         {
-            x = _x;
-            y = _y;
+            X = _x;
+            Y = _y;
         }
     }
 }

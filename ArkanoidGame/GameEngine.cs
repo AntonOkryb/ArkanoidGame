@@ -15,6 +15,9 @@ namespace ArkanoidGame
         protected List<IGameObject> objects = new List<IGameObject>();
         private List<IGameObject> tempObjects = new List<IGameObject>();
         protected List<IGameObject> delObjects = new List<IGameObject>();
+        abstract protected int IsGameOver();
+        public int result=0;
+        
 
         public GameEngine(ConsoleGraphics graphics)
         {
@@ -26,18 +29,35 @@ namespace ArkanoidGame
             tempObjects.Add(obj);
         }
 
+        public void RemoveGameObj(CGameObject Obj)
+        {
+            delObjects.Add(Obj);
+        }
+
         public void Start()
         {
             while (true)// Game Loop
             {
                 foreach (var obj in objects)
+                {
                     obj.Update(this);
+                }
+
                 foreach (var obj in delObjects)
                 {
                     objects.Remove(obj);
                 }
+
                 objects.AddRange(tempObjects);
+
                 tempObjects.Clear();
+                delObjects.Clear();
+
+                result = IsGameOver();
+                //graphics.DrawString($"result = {result}", "Arial", 0xFF000080, 530, 550, 10);
+                if (result != 0) break;
+
+                Thread.Sleep(10);
 
                 // clearing screen before painting new frame
                 graphics.FillRectangle(0xFF00FF00, 0, 0, graphics.ClientWidth, graphics.ClientHeight);
@@ -48,9 +68,20 @@ namespace ArkanoidGame
 
                 // double buffering technique is used
                 graphics.FlipPages();
-
-                Thread.Sleep(1);
             }
+
+            if (result == 1)
+            {
+                graphics.DrawString("G A M E  O V E R", "Arial", 0xFF000080, 500, 400, 30);
+            }
+
+            if (result == 2)
+            {
+                graphics.DrawString("W I N", "Arial", 0xFF000080, 600, 400, 30);
+            }
+            // double buffering technique is used
+            graphics.FlipPages();
+            Console.ReadKey();
         }
     }
 }

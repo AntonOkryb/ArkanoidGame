@@ -9,20 +9,19 @@ namespace ArkanoidGame
 {
     public class ArkanoidGameEngine : GameEngine
     {
-
+        string picturesFile = "sprites.png";
         public ArkanoidGameEngine(ConsoleGraphics graphics)
         : base(graphics)
         {
-            AddObject(new Board(graphics, "sprites.png"));
-            AddObject(new Ball(graphics, "sprites.png", this));
-            AddObject(new Scors(graphics, "sprites.png"));
-            AddObject(new GameMenu(graphics, "sprites.png"));
+            AddObject(new Board(graphics, picturesFile));
+            AddObject(new Ball(graphics, picturesFile, this));
+            AddObject(new Scors(graphics, picturesFile));
             for (int i = 0; i < 22; i++)
             {
-                AddObject(new Blocks(335 + i * 32, 100, graphics, "sprites.png"));
-                AddObject(new Blocks(90 + i * 55, 150, graphics, "sprites.png"));
-                AddObject(new Blocks(190 + i * 45, 250, graphics, "sprites.png"));
-                AddObject(new Blocks(335 + i * 32, 290, graphics, "sprites.png"));
+                AddObject(new Blocks(335 + i * 32, 100, graphics, picturesFile));
+                AddObject(new Blocks(90 + i * 55, 150, graphics, picturesFile));
+                AddObject(new Blocks(190 + i * 45, 250, graphics, picturesFile));
+                AddObject(new Blocks(335 + i * 32, 290, graphics, picturesFile));
 
             }
         }
@@ -34,16 +33,26 @@ namespace ArkanoidGame
             foreach (CGameObject obj in objects)
             {
                 if (obj == Obj) continue;
-                if (CGameObject.isCollision(Obj, obj))
+                if (CGameObject.IsCollision(Obj, obj))
                 {
                     cGameObjects.Add(obj);
                 }
             }
             return cGameObjects;
         }
-        public void removeGameObj(CGameObject Obj)
+        
+        protected override int IsGameOver()
         {
-            delObjects.Add(Obj);
+            bool isBalls = false;
+            bool isBlocks = false;
+            foreach (CGameObject obj in objects)
+            {
+                if (obj is Ball) isBalls = true;
+                if (obj is Blocks) isBlocks = true;
+            }
+            if (!isBalls) return 1;
+            if (!isBlocks) return 2;
+            return 0;
         }
     }
 }

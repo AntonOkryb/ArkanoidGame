@@ -9,52 +9,30 @@ namespace ArkanoidGame
 {
     class Ball : CGameObject
     {
-        static Random rnd = new Random();
+       private static Random rnd = new Random();
        
         private int Vx;
         private int Vy;
-        bool isBallStandingOnBoard;
-        private static bool  isGameOver;
-        int BallCrushedBlocksCnt;
-        bool noBlocks;
+        private bool isBallStandingOnBoard;
+        private int BallCrushedBlocksCnt;
 
         public Ball(ConsoleGraphics graphics, string img, ArkanoidGameEngine gameEngine) : base(graphics, img)
         {
             isBallStandingOnBoard = true;
-            isGameOver = false;
-            noBlocks = false;
-            x = 649;
-            y = 730;
-            h = 16;
-            w = 16;
+
+            X = 649;
+            Y = 730;
+            H = 16;
+            W = 16;
             Vx = rnd.Next(-14,14);
             Vy = -14;
             this.gameEngine = gameEngine;
             BallCrushedBlocksCnt = 0;
         }
 
-        public static bool GetIsGameOver()
-        {
-            return isGameOver;
-        }
-
         public override void Render(ConsoleGraphics graphics)
         {
-            if (!isGameOver)
-            {
-                graphics.DrawImagePart(image, 160, 200, h, w, x, y);
-            }
-            else
-            {
-                if (noBlocks)
-                {
-                    graphics.DrawString("W I N", "Arial", 0xFF000080, 600, 400, 30);
-                }
-                else
-                {
-                    graphics.DrawString("G A M E  O V E R", "Arial", 0xFF000080, 500, 400, 30);
-                }
-            }
+                graphics.DrawImagePart(image, 160, 200, H, W, X, Y);
         }
 
         public override void Update(GameEngine engine)
@@ -63,11 +41,17 @@ namespace ArkanoidGame
             int H = graphics.ClientHeight;
             if (isBallStandingOnBoard)
             {
-                if (x < W - 70)
-                    if (Input.IsKeyDown(Keys.RIGHT)) x += 25;
+                if (X < W - 70)
+                    if (Input.IsKeyDown(Keys.RIGHT))
+                    {
+                        X += 25;
+                    }
 
-                if (x > 50)
-                    if (Input.IsKeyDown(Keys.LEFT)) x -= 25;
+                if (X > 50)
+                    if (Input.IsKeyDown(Keys.LEFT))
+                    {
+                        X -= 25;
+                    }
             }
 
             if (Input.IsKeyDown(Keys.UP))
@@ -77,10 +61,10 @@ namespace ArkanoidGame
 
             if (!isBallStandingOnBoard)
             {
-                x += Vx;
-                y += Vy;
-                if (x <= 0 || x >= W-5 ) Vx = -Vx;
-                if (y <= 0 ) Vy = -Vy;
+                X += Vx;
+                Y += Vy;
+                if (X <= 0 || X >= W-5 ) Vx = -Vx;
+                if (Y <= 0 ) Vy = -Vy;
                 bool ballHasChangeDirection = true;
                 List<CGameObject> gameObjects = gameEngine.GetCollisions(this);
                 foreach (var gO in gameObjects)
@@ -97,18 +81,14 @@ namespace ArkanoidGame
                             Vy = -Vy;
                         }
                         ballHasChangeDirection = false;
-                        gameEngine.removeGameObj(gO);
+                        gameEngine.RemoveGameObj(gO);
                         Scors.AddScors(10);
-                        if (BallCrushedBlocksCnt == 88)
-                        {
-                            isGameOver = true;
-                            noBlocks = true;
-                        }
+
                     }
                 }
-                if (y > graphics.ClientHeight)
+                if (Y > graphics.ClientHeight)
                 {
-                    isGameOver = true;
+                    gameEngine.RemoveGameObj(this);
                 }
             }
         }

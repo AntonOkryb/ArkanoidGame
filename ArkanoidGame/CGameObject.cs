@@ -14,10 +14,10 @@ namespace ArkanoidGame
         protected ConsoleImage image;
         protected ConsoleGraphics graphics;
 
-        public int x{ set; get; }
-        public int y{ set; get; }
-        public int h{ set; get; }
-        public int w{ set; get; }
+        public int X{ set; get; }
+        public int Y{ set; get; }
+        public int H{ set; get; }
+        public int W{ set; get; }
         
 
         public CGameObject(ConsoleGraphics graphics, string img)
@@ -26,12 +26,11 @@ namespace ArkanoidGame
             this.graphics = graphics;
         }
 
-
         public virtual void Render(ConsoleGraphics graphics) { }
 
         public virtual void Update(GameEngine engine) { }
 
-        public static bool isCollision(CGameObject A, CGameObject B)
+        public static bool IsCollision(CGameObject A, CGameObject B)
         {
             List<CPoint> pointsA = new List<CPoint>();
             List<CPoint> pointsB = new List<CPoint>();
@@ -60,37 +59,41 @@ namespace ArkanoidGame
 
             return false;
         }
-
+        
         public CRect GetRect()
         {
-            return new CRect(new CPoint(x, y), new CPoint(x + w, y + h));
+            return new CRect(new CPoint(X, Y), new CPoint(X + W, Y + H));
         }
+
         public CPoint a
         {
             get
             {
-                return new CPoint(x, y);
+                return new CPoint(X, Y);
             }
         }
+
         public CPoint b
         {
             get
             {
-                return new CPoint(x+w, y);
+                return new CPoint(X+W, Y);
             }
         }
+
         public CPoint c
         {
             get
             {
-                return new CPoint(x+w, y+h);
+                return new CPoint(X+W, Y+H);
             }
         }
+
         public CPoint d
         {
             get
             {
-                return new CPoint(x, y+h);
+                return new CPoint(X, Y+H);
             }
         }
     }

@@ -11,18 +11,20 @@ namespace ArkanoidGame
     {
         public Blocks(int x, int y, ConsoleGraphics graphics, string img) : base(graphics, img)
         {
-            this.x = x;
-            this.y = y;
-            h = 30;
-            w = 30;
+            this.X = x;
+            this.Y = y;
+            H = 30;
+            W = 30;
         }
 
         public override void Render(ConsoleGraphics graphics)
         {
-            if (!Ball.GetIsGameOver())
-            {
-                graphics.DrawImagePart(image, 0, 0, h, w, x, y);
-            }
+            graphics.DrawImagePart(image, 0, 0, H, W, X, Y);
+
+            //if (!Ball.GetIsGameOver())
+            //{
+            //    graphics.DrawImagePart(image, 0, 0, H, W, X, Y);
+            //}
         }
 
         public override void Update(GameEngine engine)

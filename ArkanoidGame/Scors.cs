@@ -12,36 +12,36 @@ namespace ArkanoidGame
     {
         private static int currentScors;
         private static int bestScors;
-        static bool isBestScorsChenged;
+        private static bool isBestScorsChenged;
         public Scors(ConsoleGraphics graphics, string img) : base(graphics, img)
         {
             currentScors = 0;
             isBestScorsChenged = false;
             FileInfo scors = new FileInfo("scors.txt");
-            if (scors.Exists)
+            if (!scors.Exists)
+            {
+                using (StreamWriter sw = scors.CreateText())
+                {
+                    sw.Write(0);
+                }
+            }
+            else
             {
                 using (StreamReader sr = new StreamReader("scors.txt"))
                 {
                     bestScors = int.Parse(sr.ReadToEnd());
                 }
             }
-            else
-            {
-                bestScors = 0;
-                scors.CreateText();
-            }
         }
 
         public void PutBestScors()
         {
-            if (!Ball.GetIsGameOver())
-            {
                 if (currentScors > bestScors)
                 {
                     bestScors = currentScors;
                     isBestScorsChenged = true;
                 }
-            }
+            
         }
 
         public static void WriteInFileBestScors()
@@ -81,10 +81,7 @@ namespace ArkanoidGame
         public override void Update(GameEngine engine)
         {
             PutBestScors();
-            if (Ball.GetIsGameOver())
-            {
-                WriteInFileBestScors();
-            }
+            WriteInFileBestScors();
         }
     }
 }
