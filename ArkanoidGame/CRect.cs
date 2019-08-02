@@ -13,12 +13,12 @@ namespace ArkanoidGame
         public int X2 { set; get; }
         public int Y2 { set; get; }
 
-        public CRect(int x1, int y1, int x2, int y2)
+        public CRect(int X1, int Y1, int X2, int Y2)
         {
-            this.X1 = x1;
-            this.Y1 = y1;
-            this.X2 = x2;
-            this.Y2 = y2;
+            X1 = X1;
+            Y1 = Y1;
+            X2 = X2;
+            Y2 = Y2;
         }
         public CRect(CPoint a, CPoint b)
         {

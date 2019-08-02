@@ -54,7 +54,6 @@ namespace ArkanoidGame
                 delObjects.Clear();
 
                 result = IsGameOver();
-                //graphics.DrawString($"result = {result}", "Arial", 0xFF000080, 530, 550, 10);
                 if (result != 0) break;
 
                 Thread.Sleep(10);

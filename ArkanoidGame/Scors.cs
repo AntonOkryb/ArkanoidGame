@@ -75,8 +75,7 @@ namespace ArkanoidGame
 
         public override void Render(ConsoleGraphics graphics)
         {
-            graphics.DrawString($"SCORS = {currentScors}", "Arial", 0xFF000080, 30, graphics.ClientHeight - 25, 16);
-            graphics.DrawString($"BEST SCORS = {bestScors}", "Arial", 0xFF000080, graphics.ClientWidth - 220, graphics.ClientHeight - 25, 16);
+           
         }
         public override void Update(GameEngine engine)
         {
